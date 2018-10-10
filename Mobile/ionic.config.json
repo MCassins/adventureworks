@@ -1,0 +1,8 @@
+{
+  "name": "AdventureWorks",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "ionic-angular",
+  "pro_id": "669c61e3"
+}
