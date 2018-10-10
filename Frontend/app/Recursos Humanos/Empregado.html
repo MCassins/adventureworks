@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Empregado</title>
+		<script src="jquery.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+		<script src="jquery.dataTables.min.js"></script>
+		<script src="angular-datatables.min.js"></script>
+		<script src="bootstrap.min.js"></script>
+		<link rel="stylesheet" href="bootstrap.min.css">
+		<link rel="stylesheet" href="bootstrap.css">
+		<link rel="stylesheet" href="datatables.bootstrap.css">
+		
+	</head>
+	<body ng-app="crudApp" ng-controller="crudController">
+		<nav class="navbar2 navbar2-expand-lg navbar2-dark bg-primary1">
+		  <a class="navbar2-brand" href="IndexRh.html">Página Inicial</a>
+		  <button class="navbar2-toggler" type="button" data-toggle="collapse" data-target="#navbar2Color01" aria-controls="navbar2Color01" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar2-toggler-icon"></span>
+		  </button>
+
+		  <div class="collapse1 navbar2-collapse" id="navbar2Color01">
+			<ul class="navbar2-nav mr-auto1">
+			  <li class="nav-item1">
+				<a class="nav-link1" href="Departamento.html">Departamento</a>
+			  </li>
+			  <li class="nav-item1">
+				<a class="nav-link1" href="HistoricoEmpregadoDepartamento.html">Histórico do Empregado</a>
+			  </li>
+			  <li class="nav-item1">
+				<a class="nav-link1" href="HistoricoPagamentoEmpregado.html">Histórico de Pagamento</a>
+			  </li>
+			  <li class="nav-item1">
+				<a class="nav-link1" href="CandidatoServico.html">Candidatos</a>
+			  </li>
+			  <li class="nav-item1">
+				<a class="nav-link1" href="Mudanca.html">Mudanças</a>
+			  </li>
+			</ul>
+		  </div>
+		</nav>
+		
+		<div class="container" ng-init="fetchData()">
+			<br />
+				<h3 align="center">Empregado</h3>
+			<br />
+			<div class="alert alert-success alert-dismissible" ng-show="success" >
+				<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+				{{successMessage}}
+			</div>
+			<div align="right">
+				<button type="button" name="add_button" ng-click="addData()" class="btn btn-success">Cadastrar Novo</button>
+			</div>
+			<br />
+			<div class="table-responsive" style="overflow-x: unset;">
+				<table datatable="ng" dt-options="vm.dtOptions" class="table table-bordered table-striped">
+					<thead>
+						<tr>
+							<th>Business ID</th>						
+							<th>Data Contratação</th>																			
+							<th>Rowguid</th>
+							<th>Data de Modificação</th>
+							<th>Editar</th>
+							<th>Deletar</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="li in listaprodutos">
+							<td>{{ li.SubcategoriaProdutoId }}</td>
+							<td>{{ li.MetodoBase }}</td>	
+							<td>{{ li.MetodoRate }}</td>				
+							<td>{{ li.DataModificacao | date : "dd/MM/yyyy - HH:mm" }}</td>
+							<td><button type="button" ng-click="fetchSingleData(li.MetodoEnvioID)" class="btn btn-warning btn-xs" >Editar</button></td>
+							<td><button type="button" ng-click="deleteData(li.MetodoEnvioID)" class="btn btn-danger btn-xs">Deletar</button></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+
+		</div>
+	</body>
+</html>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="crudmodal">
+	<div class="modal-dialog" role="document">
+    	<div class="modal-content">
+    		<form method="post" ng-submit="submitForm()">
+	      		<div class="modal-header">
+	        		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        		<h4 class="modal-title">{{modalTitle}}</h4>
+	      		</div>
+	      		<div class="modal-body">
+	      			<div class="alert alert-danger alert-dismissible" ng-show="error" >
+						<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+						{{errorMessage}}
+					</div>
+					<div class="form-group">
+					  <label>Business ID:</label>
+					  <input type="text" class="form-control" ng-model="Nome" name="Nome"/>
+					</div>	
+										<div class="form-group">
+					  <label>Id Número Nacional:</label>
+					  <input type="text" class="form-control" ng-model="Nome" name="Nome"/>
+					</div>	
+										<div class="form-group">
+					  <label>Id Login:</label>
+					  <input type="text" class="form-control" ng-model="Nome" name="Nome"/>
+					</div>	
+										<div class="form-group">
+					  <label>Organização Node:</label>
+					  <input type="text" class="form-control" ng-model="Nome" name="Nome"/>
+					</div>	
+										<div class="form-group">
+					  <label>Nível de Organização:</label>
+					  <input type="text" class="form-control" ng-model="Nome" name="Nome"/>
+					</div>	
+										<div class="form-group">
+					  <label>Nome Trabalho:</label>
+					  <input type="text" class="form-control" ng-model="Nome" name="Nome"/>
+					</div>	
+										<div class="form-group">
+					  <label>Data Nascimento:</label>
+					  <input type="text" class="form-control" ng-model="Nome" name="Nome"/>
+					</div>	
+										<div class="form-group">
+					  <label>Relacionamento:</label>
+					  <input type="text" class="form-control" ng-model="Nome" name="Nome"/>
+					</div>	
+										<div class="form-group">
+					  <label>Sexo:</label>
+					  <input type="text" class="form-control" ng-model="Nome" name="Nome"/>
+					</div>	
+										<div class="form-group">
+					  <label>Data Contratação:</label>
+					  <input type="text" class="form-control" ng-model="Nome" name="Nome"/>
+					</div>	
+										<div class="form-group">
+					  <label>Flag Salário:</label>
+					  <input type="text" class="form-control" ng-model="Nome" name="Nome"/>
+					</div>	
+										<div class="form-group">
+					  <label>Periodo Férias:</label>
+					  <input type="text" class="form-control" ng-model="Nome" name="Nome"/>
+					</div>	
+										<div class="form-group">
+					  <label>Total de Horas de Afastamento:</label>
+					  <input type="text" class="form-control" ng-model="Nome" name="Nome"/>
+					</div>	
+										<div class="form-group">
+					  <label>Flag Atual:</label>
+					  <input type="text" class="form-control" ng-model="Nome" name="Nome"/>
+					</div>	
+										<div class="form-group">
+					  <label>Rowguid:</label>
+					  <input type="text" class="form-control" ng-model="Nome" name="Nome"/>
+					</div>	
+										<div class="form-group">
+					  <label>Data de Modificação:</label>
+					  <input type="text" class="form-control" ng-model="Nome" name="Nome"/>
+					</div>	
+	      		</div>
+	      		<div class="modal-footer">
+	      			<input type="hidden" name="hidden_id" value="{{hidden_id}}" />
+	      			<input type="submit" name="submit" id="submit" class="btn btn-info" value="{{submit_button}}" />
+	        		<button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+	        	</div>
+	        </form>
+    	</div>
+  	</div>
+</div>
+
+
+<script>
+
+var app = angular.module('crudApp', ['datatables']);
+app.controller('crudController', function($scope, $http){
+
+	$scope.success = false;
+
+	$scope.error = false;
+
+	$scope.fetchData = function(){
+		$http.get('http://osoriocomprasup3b.gear.host/api/MetodoDeEnvios/').then(doneCallbacks, failCallbacks);
+    
+		function doneCallbacks(res) { 			
+ 			$scope.listaprodutos = res.data.metodoEnvio;
+ 			$scope.lista = {};
+			
+ 		}
+
+		function failCallbacks(err) {
+ 			console.log(err.message);
+ 		}
+	};
+
+	$scope.openModal = function(){
+		var modal_popup = angular.element('#crudmodal');
+		modal_popup.modal('show');
+	};
+
+	$scope.closeModal = function(){
+		var modal_popup = angular.element('#crudmodal');
+		modal_popup.modal('hide');
+	};
+
+	$scope.addData = function(){
+		$scope.Nome = '';
+		$http.get('http://osoriocomprasup3b.gear.host/api/MetodoDeEnvios/').then(doneCallbacks, failCallbacks);
+		function doneCallbacks(res) { 	
+			$scope.listacat = res.data.metodoEnvio;
+			$scope.cate = [];
+			angular.forEach($scope.listacat, function(value, key){
+				$scope.cate.push(value.Nome);			
+			});
+ 			$scope.categorias = $scope.cate;
+			$scope.modalTitle = 'Cadastrar Empregado';
+			$scope.submit_button = 'CADASTRAR';
+			$scope.openModal();	
+ 		}
+
+		function failCallbacks(err) {
+ 			console.log(err.message);
+ 		}
+		
+	};
+
+	$scope.submitForm = function(){
+		
+		$scope.lista.Nome = $scope.Nome;
+		$scope.lista.DataModificacao = new Date();
+		
+		if($scope.hidden_id == undefined){
+			console.log($scope.lista);
+			var dados = $scope.lista;			
+			$http.post('http://osoriocomprasup3b.gear.host/api/MetodoDeEnvios/', dados).then(doneCallbacks, failCallbacks);
+			function doneCallbacks(res) { 			
+				$scope.success = true;
+				$scope.error = false;
+				$scope.successMessage = res.data.message;
+				$scope.form_data = {};
+				$scope.closeModal();
+				$scope.fetchData();
+			}
+			function failCallbacks(err) {
+				$scope.success = false;
+				$scope.error = true;
+				$scope.errorMessage = err.data.error;
+			}
+		}else{
+			$scope.lista.MetodoEnvioID = $scope.hidden_id;
+			console.log($scope.lista);	 
+			$http.put('http://osoriocomprasup3b.gear.host/api/MetodoDeEnvios/' + $scope.lista.MetodoEnvioID + '/', $scope.lista).then(doneCallbacks, failCallbacks);
+			function doneCallbacks(res) { 			
+				$scope.success = true;
+				$scope.error = false;
+				$scope.successMessage = res.data.message;
+				$scope.form_data = {};
+				$scope.closeModal();
+				$scope.hidden_id = undefined;
+				$scope.fetchData();
+			}
+			function failCallbacks(err) {
+				$scope.success = false;
+				$scope.error = true;
+				$scope.errorMessage = err.data.error;
+				$scope.hidden_id = undefined;
+			}	
+		}
+	};
+
+	$scope.fetchSingleData = function(id){
+		console.log(id);			
+    	$http.get('http://osoriocomprasup3b.gear.host/api/MetodoDeEnvios/' + id + '/').then(function(response){
+			
+			$scope.Categorias = response.data.CategoriaProduto;
+			$scope.Nome = response.data.Nome;
+			$scope.hidden_id = id;
+			
+			$scope.modalTitle = 'Editar Empregado';
+			$scope.submit_button = 'Salvar';
+			$scope.openModal();
+   	    });  
+	};
+
+	$scope.deleteData = function(id){
+		$http.get('http://osoriocomprasup3b.gear.host/api/MetodoDeEnvios/' + id + '/').then(function(response){
+			if(confirm("Tem certeza que quer apagar "+ response.data.Nome +"?"))
+			{
+				console.log(id);
+				$http.delete('http://osoriocomprasup3b.gear.host/api/MetodoDeEnvios/' + id + '/').then(function(response){
+					$scope.fetchData();
+				});  	    
+			}
+   	    });  
+		
+	};
+
+});
+
+</script>

@@ -1,0 +1,83 @@
+<!DOCTYPE>
+<html ng-app="custoproduto">
+<head>
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+	<script src="producao.CustoProduto.js"></script>
+</head>
+
+<body>
+
+<nav class=" p-4 navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="indexF.html">Bem vindo ao módulo de fabricação</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item active">
+        <a class="nav-link p-3 mb-2 bg-danger text-white" href="producao.CustoProduto.html"> Tabela CustoProduto <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link p-3 mb-2 bg-danger text-white" href="producao.HistoricoTransacoes.html">Tabela Historico Transações</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link p-3 mb-2 bg-danger text-white" href="producao.OrdemServico.html">Tabela Ordem Serviço</a>
+      </li>
+        <li class="nav-item">
+        <a class="nav-link p-3 mb-2 bg-danger text-white" href="producao.UnidadeMedida.html">Tabela UnidadeMedida</a>
+        </li>
+        <li class="nav-item">
+        <a class="nav-link p-3 mb-2 bg-danger text-white" href="producao.MotivoDescarte.html">Tabela MotivoDescarte</a>
+        </li>
+        <li class="nav-item">
+        <a class="nav-link p-3 mb-2 bg-danger text-white" href="producao.Materiais.html">Tabela Materiais</a>
+        </li>
+    </ul>
+  </div>
+</nav>
+
+  	<div class="container" ng-controller="AppCtrl">
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Datainicio</th>
+					<th>DataFinal</th>
+					<th>Produtoid</th>
+					<th>CustoPadrão</th>		
+					<th>Data de Modificação</th>						
+					<th>&nbsp;</th>				
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td><input class="form-control" ng-model="lista.Datainicio"></td>
+					<td><input class="form-control" ng-model="lista.DataFinal"></td>
+					<td><input class="form-control" ng-model="lista.Produtoid"></td>
+					<td><input class="form-control" ng-model="lista.CustoPadrão"></td>
+					<td><input class="form-control" ng-model="lista.DataModificacao"></td>
+					<td><button class="btn btn-primary" ng-click="adicionar()">Cadastrar</button></td>
+					<td><button class="btn btn-info" ng-click="atualizar()">Atualizar</button></td>
+				</tr>
+				<tr ng-repeat="li in listacustoproduto">
+					<td>{{ li.Datainicio }}</td>			
+					<td>{{ li.DataFinal }}</td>
+					<td>{{ li.Produtoid }}</td>
+					<td>{{ li.CustoPadrão }}</td>
+					<td>{{ li.DataModificacao }}</td>
+					<td><button class="btn btn-danger" ng-click="remover(li.MetodoEnvioID)">Excluir</button></td>
+					<td><button class="btn btn-warning" ng-click="editar(li.MetodoEnvioID)">Editar</button></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+   
+    
+</body>
+
+
+</html>

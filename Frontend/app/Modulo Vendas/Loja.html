@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Módulo Vendas - Loja</title>
+		<script src="jquery.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+		<script src="jquery.dataTables.min.js"></script>
+		<script src="angular-datatables.min.js"></script>
+		<script src="bootstrap.min.js"></script>
+		<link rel="stylesheet" href="bootstrap.min.css">
+		<link rel="stylesheet" href="bootstrap.css">
+		<link rel="stylesheet" href="datatables.bootstrap.css">
+		
+	</head>
+	<body ng-app="crudApp" ng-controller="crudController">
+		<nav class="navbar2 navbar2-expand-lg navbar2-dark bg-primary1">
+		  <a class="navbar2-brand" href="IndexProdutos.html">Página Inicial</a>
+		  <button class="navbar2-toggler" type="button" data-toggle="collapse" data-target="#navbar2Color01" aria-controls="navbar2Color01" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar2-toggler-icon"></span>
+		  </button>
+
+		  <div class="collapse1 navbar2-collapse" id="navbar2Color01">
+			<ul class="navbar2-nav mr-auto1">
+			  <li class="nav-item1">
+				<a class="nav-link1" href="Cambio.html">Câmbio </a>
+			  </li>
+			  <li class="nav-item1">
+				<a class="nav-link1" href="CartaoCredito.html">Cartão de Crédito</a>
+			  </li>
+			  <li class="nav-item1">
+				<a class="nav-link1" href="Imposto.html">Imposto</a>
+			  </li>
+			  <li class="nav-item1">
+				<a class="nav-link1" href="IndexVendas.html">Vendas</a>
+			  </li>
+			  <li class="nav-item1">
+				<a class="nav-link1" href="Loja.html">Lojas</a>
+			  </li>
+			  <li class="nav-item1">
+				<a class="nav-link1" href="Motivo.html">Motivos</a>
+			  </li>			  
+			</ul>
+		  </div>
+		</nav>
+		
+		<div class="container" ng-init="fetchData()">
+			<br />
+				<h3 align="center">Lojas</h3>
+			<br />
+			<div class="alert alert-success alert-dismissible" ng-show="success" >
+				<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+				{{successMessage}}
+			</div>
+			<div align="right">
+				<button type="button" name="add_button" ng-click="addData()" class="btn btn-success">Cadastrar Novo</button>
+			</div>
+			<br />
+			<div class="table-responsive" style="overflow-x: unset;">
+				<table datatable="ng" dt-options="vm.dtOptions" class="table table-bordered table-striped">
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>Nome</th>
+							<th>Código da Região</th>	
+							<th>Grupo</th>	
+							<th>Ultima Modificação</th>
+							<th>Editar</th>
+							<th>Deletar</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="li in listaprodutos">
+							<td>{{ li.Id }}</td>
+							<td>{{ li.Nome }}</td>	
+							<td>{{ li.Codigo }}</td>		
+							<td>{{ li.Grupo }}</td>							
+							<td>{{ li.DataModificacao | date : "dd/MM/yyyy - HH:mm" }}</td>
+							<td><button type="button" ng-click="fetchSingleData(li.MetodoEnvioID)" class="btn btn-warning btn-xs" >Editar</button></td>
+							<td><button type="button" ng-click="deleteData(li.MetodoEnvioID)" class="btn btn-danger btn-xs">Deletar</button></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+
+		</div>
+	</body>
+</html>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="crudmodal">
+	<div class="modal-dialog" role="document">
+    	<div class="modal-content">
+    		<form method="post" ng-submit="submitForm()">
+	      		<div class="modal-header">
+	        		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        		<h4 class="modal-title">{{modalTitle}}</h4>
+	      		</div>
+	      		<div class="modal-body">
+	      			<div class="alert alert-danger alert-dismissible" ng-show="error" >
+						<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+						{{errorMessage}}
+					</div>
+					<div class="form-group">
+					  <label>Nome da Loja:</label>
+					  <input type="text" class="form-control" ng-model="Nome" name="Nome"/>
+					</div>	
+					<div class="form-group">
+					  <label>Código da Região:</label>
+					  <input type="text" class="form-control" ng-model="Nome" name="Nome"/>
+					</div>	
+					<div class="form-group">
+					  <label>Grupo:</label>
+					  <input type="text" class="form-control" ng-model="Nome" name="Nome"/>
+					</div>	
+					<div class="form-group">
+					  <label>Vendas YTB:</label>
+					  <input type="text" class="form-control" ng-model="Nome" name="Nome"/>
+					</div>
+					<div class="form-group">
+					  <label>Vendas no Último Ano:</label>
+					  <input type="text" class="form-control" ng-model="Nome" name="Nome"/>
+					</div>
+					<div class="form-group">
+					  <label>Custo YTB:</label>
+					  <input type="text" class="form-control" ng-model="Nome" name="Nome"/>
+					</div>
+					<div class="form-group">
+					  <label>Custo no Último Ano:</label>
+					  <input type="text" class="form-control" ng-model="Nome" name="Nome"/>
+					</div>							
+	      		</div>
+	      		<div class="modal-footer">
+	      			<input type="hidden" name="hidden_id" value="{{hidden_id}}" />
+	      			<input type="submit" name="submit" id="submit" class="btn btn-info" value="{{submit_button}}" />
+	        		<button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+	        	</div>
+	        </form>
+    	</div>
+  	</div>
+</div>
+
+
+<script>
+
+var app = angular.module('crudApp', ['datatables']);
+app.controller('crudController', function($scope, $http){
+	var itensCarrinho
+	$scope.success = false;
+
+	$scope.error = false;
+
+	$scope.fetchData = function(){
+	var dadosImposto = [{"Id":1,"Nome":"Clay","Codigo":"EC","DataModificacao":"03/02/2018","Grupo":"YPF Sociedad Anonima"},
+{"Id":2,"Nome":"Ursala","Codigo":"PR","DataModificacao":"24/12/2017","Grupo":"Apollo Investment Corporation"},
+{"Id":3,"Nome":"Sal","Codigo":"JP","DataModificacao":"13/07/2018","Grupo":"JMP Group LLC"},
+{"Id":4,"Nome":"Goldie","Codigo":"FR","DataModificacao":"30/03/2018","Grupo":"Williams Partners LP"},
+{"Id":5,"Nome":"Lydia","Codigo":"ID","DataModificacao":"15/03/2018","Grupo":"Invesco Pennsylvania Value Municipal Income Trust"},
+{"Id":6,"Nome":"Chloris","Codigo":"JP","DataModificacao":"21/11/2017","Grupo":"TapImmune Inc."},
+{"Id":7,"Nome":"Muffin","Codigo":"KZ","DataModificacao":"01/05/2018","Grupo":"Knoll, Inc."},
+{"Id":8,"Nome":"Weston","Codigo":"CN","DataModificacao":"23/09/2018","Grupo":"Fifth Street Senior Floating Rate Corp."},
+{"Id":9,"Nome":"Damon","Codigo":"ID","DataModificacao":"04/08/2018","Grupo":"RigNet, Inc."},
+{"Id":10,"Nome":"Teressa","Codigo":"CZ","DataModificacao":"09/08/2018","Grupo":"First United Corporation"},
+{"Id":11,"Nome":"Sebastiano","Codigo":"CZ","DataModificacao":"27/02/2018","Grupo":"New York REIT, Inc."},
+{"Id":12,"Nome":"Ida","Codigo":"UA","DataModificacao":"31/03/2018","Grupo":"Nuveen Minnesota Quality Municipal Income Fund"},
+{"Id":13,"Nome":"Bernhard","Codigo":"HR","DataModificacao":"18/10/2017","Grupo":"The Bancorp, Inc."},
+{"Id":14,"Nome":"Adelind","Codigo":"AL","DataModificacao":"06/02/2018","Grupo":"PulteGroup, Inc."},
+{"Id":15,"Nome":"Delinda","Codigo":"KZ","DataModificacao":"12/12/2017","Grupo":"Sotheby&#39;s"},
+{"Id":16,"Nome":"Gard","Codigo":"RU","DataModificacao":"05/09/2018","Grupo":"Penn National Gaming, Inc."},
+{"Id":17,"Nome":"Nichole","Codigo":"CN","DataModificacao":"18/05/2018","Grupo":"Tennessee Valley Authority"},
+{"Id":18,"Nome":"Cinderella","Codigo":"BJ","DataModificacao":"06/12/2017","Grupo":"General Motors Company"},
+{"Id":19,"Nome":"Valaria","Codigo":"PS","DataModificacao":"21/02/2018","Grupo":"Pacific Continental Corporation (Ore)"},
+{"Id":20,"Nome":"Roderick","Codigo":"CN","DataModificacao":"02/08/2018","Grupo":"Columbia Banking System, Inc."},
+{"Id":21,"Nome":"Cortie","Codigo":"ME","DataModificacao":"19/12/2017","Grupo":"ABB Ltd"},
+{"Id":22,"Nome":"Charlot","Codigo":"DM","DataModificacao":"06/11/2017","Grupo":"Reinsurance Group of America, Incorporated"},
+{"Id":23,"Nome":"Jilli","Codigo":"CN","DataModificacao":"11/05/2018","Grupo":"China Lodging Group, Limited"},
+{"Id":24,"Nome":"Zia","Codigo":"BR","DataModificacao":"14/07/2018","Grupo":"Bellatrix Exploration Ltd"},
+{"Id":25,"Nome":"Norene","Codigo":"CN","DataModificacao":"19/12/2017","Grupo":"Signature Bank"},
+{"Id":26,"Nome":"Richy","Codigo":"FR","DataModificacao":"26/02/2018","Grupo":"Wolverine Bancorp, Inc."},
+{"Id":27,"Nome":"Charmian","Codigo":"RU","DataModificacao":"05/01/2018","Grupo":"Midland States Bancorp, Inc."},
+{"Id":28,"Nome":"Lorette","Codigo":"SO","DataModificacao":"08/03/2018","Grupo":"S&P Global Inc."},
+{"Id":29,"Nome":"Horatio","Codigo":"PE","DataModificacao":"06/06/2018","Grupo":"Fossil Group, Inc."},
+{"Id":30,"Nome":"Rab","Codigo":"IR","DataModificacao":"24/09/2018","Grupo":"Hope Bancorp, Inc."},
+{"Id":31,"Nome":"Albrecht","Codigo":"CN","DataModificacao":"17/01/2018","Grupo":"Liberty Media Corporation"},
+{"Id":32,"Nome":"Cissy","Codigo":"PL","DataModificacao":"27/02/2018","Grupo":"PDC Energy, Inc."},
+{"Id":33,"Nome":"Lissie","Codigo":"ID","DataModificacao":"11/07/2018","Grupo":"Pyxis Tankers Inc."},
+{"Id":34,"Nome":"Netti","Codigo":"CN","DataModificacao":"29/06/2018","Grupo":"Maxim Integrated Products, Inc."},
+{"Id":35,"Nome":"Legra","Codigo":"UA","DataModificacao":"08/09/2018","Grupo":"First Trust United Kingdom AlphaDEX Fund"},
+{"Id":36,"Nome":"Ephrayim","Codigo":"TH","DataModificacao":"27/06/2018","Grupo":"DDR Corp."},
+{"Id":37,"Nome":"Archibaldo","Codigo":"BW","DataModificacao":"05/03/2018","Grupo":"Nautilus Group, Inc. (The)"},
+{"Id":38,"Nome":"Jasun","Codigo":"SE","DataModificacao":"08/10/2017","Grupo":"Berry Global Group, Inc."},
+{"Id":39,"Nome":"Gordon","Codigo":"CN","DataModificacao":"30/04/2018","Grupo":"Treehouse Foods, Inc."},
+{"Id":40,"Nome":"Madelin","Codigo":"US","DataModificacao":"07/12/2017","Grupo":"Ampco-Pittsburgh Corporation"},
+{"Id":41,"Nome":"Leigh","Codigo":"CN","DataModificacao":"02/10/2017","Grupo":"Medovex Corp."},
+{"Id":42,"Nome":"Hermann","Codigo":"GR","DataModificacao":"22/10/2017","Grupo":"Global Blood Therapeutics, Inc."},
+{"Id":43,"Nome":"Jewel","Codigo":"CN","DataModificacao":"09/01/2018","Grupo":"Avianca Holdings S.A."},
+{"Id":44,"Nome":"Babara","Codigo":"FR","DataModificacao":"01/10/2018","Grupo":"Autoliv, Inc."},
+{"Id":45,"Nome":"El","Codigo":"TM","DataModificacao":"24/03/2018","Grupo":"Netlist, Inc."},
+{"Id":46,"Nome":"Niko","Codigo":"CN","DataModificacao":"30/05/2018","Grupo":"Eaton Vance Senior Floating-Rate Fund"},
+{"Id":47,"Nome":"Nadine","Codigo":"CN","DataModificacao":"03/08/2018","Grupo":"Alleghany Corporation"},
+{"Id":48,"Nome":"Alley","Codigo":"MX","DataModificacao":"29/06/2018","Grupo":"Fidelity National Financial, Inc."},
+{"Id":49,"Nome":"Drew","Codigo":"CN","DataModificacao":"03/11/2017","Grupo":"Netflix, Inc."},
+{"Id":50,"Nome":"Reba","Codigo":"CN","DataModificacao":"15/02/2018","Grupo":"Kemper Corporation"}];
+
+ 			$scope.listaprodutos = dadosImposto;
+			$scope.lista = {};
+			console.log(dadosImposto);		
+ 		
+
+	};
+
+	$scope.openModal = function(){
+		var modal_popup = angular.element('#crudmodal');
+		modal_popup.modal('show');
+	};
+
+	$scope.closeModal = function(){
+		var modal_popup = angular.element('#crudmodal');
+		modal_popup.modal('hide');
+	};
+
+	$scope.addData = function(){
+		$scope.Nome = '';
+		$scope.modalTitle = 'Cadastrar Loja';
+		$scope.submit_button = 'CADASTRAR';
+		$scope.openModal();
+	};
+
+	$scope.submitForm = function(){
+		
+		$scope.lista.Nome = $scope.Nome;
+		$scope.lista.DataModificacao =  new Date();
+		
+		if($scope.hidden_id == undefined){
+			console.log($scope.lista);
+			var dados = $scope.lista;			
+			$http.post('http://osoriocomprasup3b.gear.host/api/MetodoDeEnvios/', dados).then(doneCallbacks, failCallbacks);
+			function doneCallbacks(res) { 			
+				$scope.success = true;
+				$scope.error = false;
+				$scope.successMessage = res.data.message;
+				$scope.form_data = {};
+				$scope.closeModal();
+				$scope.fetchData();
+			}
+			function failCallbacks(err) {
+				$scope.success = false;
+				$scope.error = true;
+				$scope.errorMessage = err.data.error;
+			}
+		}else{
+			$scope.lista.MetodoEnvioID = $scope.hidden_id;
+			console.log($scope.lista);	 
+			$http.put('http://osoriocomprasup3b.gear.host/api/MetodoDeEnvios/' + $scope.lista.MetodoEnvioID + '/', $scope.lista).then(doneCallbacks, failCallbacks);
+			function doneCallbacks(res) { 			
+				$scope.success = true;
+				$scope.error = false;
+				$scope.successMessage = res.data.message;
+				$scope.form_data = {};
+				$scope.closeModal();
+				$scope.hidden_id = undefined;
+				$scope.fetchData();
+			}
+			function failCallbacks(err) {
+				$scope.success = false;
+				$scope.error = true;
+				$scope.errorMessage = err.data.error;
+				$scope.hidden_id = undefined;
+			}	
+		}
+	};
+
+	$scope.fetchSingleData = function(id){
+		console.log(id);			
+    	$http.get('http://osoriocomprasup3b.gear.host/api/MetodoDeEnvios/' + id + '/').then(function(response){
+			
+			$scope.Nome = response.data.Nome;
+			$scope.hidden_id = id;
+			
+			$scope.modalTitle = 'Editar Loja';
+			$scope.submit_button = 'Salvar';
+			$scope.openModal();
+   	    });  
+	};
+
+	$scope.deleteData = function(id){
+		$http.get('http://osoriocomprasup3b.gear.host/api/MetodoDeEnvios/' + id + '/').then(function(response){
+			if(confirm("Tem certeza que quer apagar "+ response.data.Nome +"?"))
+			{
+				console.log(id);
+				$http.delete('http://osoriocomprasup3b.gear.host/api/MetodoDeEnvios/' + id + '/').then(function(response){
+					$scope.fetchData();
+				});  	    
+			}
+   	    });  
+		
+	};
+
+});
+
+</script>

@@ -1,0 +1,92 @@
+<!DOCTYPE>
+<html ng-app="administracaodatabase">
+<head>
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+	<script src="administracao.Databaselog.js"></script>
+</head>
+
+<body>
+
+<nav class=" p-4 navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand p-2" href="index.html">
+  <img src="img/admin.png">
+  Administração
+  </a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item active">
+        <a class="p-3 mb-2 bg-primary text-white" href="administracao.Databaselog.html"> DatabaseLog</a>
+      </li>
+      <li class="nav-item">
+        <a class="p-3 mb-2 bg-primary text-white" href="administracao.ErrorLog.html"> ErrorLog
+        </a>
+      </li>
+
+    </ul>
+  </div>
+</nav>
+       
+
+  	<div class="container" ng-controller="AppCtrl">
+		<table class="table">
+			<thead>
+				<tr>
+					<th>HoraPostagem</th>
+					<th>UsuarioDB</th>
+					<th>Evento</th>
+					<th>SchemaTB</th>		
+					<th>Objeto</th>			
+					<th>TSQL</th>
+					<th>XMLARQ</th>			
+					<th>&nbsp;</th>				
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td><input class="form-control" ng-model="lista.HoraPostagem"></td>
+					<td><input class="form-control" ng-model="lista.UsuarioDB"></td>
+					<td><input class="form-control" ng-model="lista.Evento"></td>
+					<td><input class="form-control" ng-model="lista.SchemaTB"></td>
+					<td><input class="form-control" ng-model="lista.Objeto"></td>
+					<td><input class="form-control" ng-model="lista.TSQL"></td>
+				    <td><input class="form-control" ng-model="lista.XMLARQ"></td>
+					<td><button class="btn btn-primary" ng-click="adicionar()">Cadastrar</button></td>
+					<td><button class="btn btn-info" ng-click="atualizar()">Atualizar</button></td>
+				</tr>
+				<tr ng-repeat="li in databaselogs">
+					<td>{{ li.HoraPostagem }}</td>				
+					<td>{{ li.UsuarioDB }}</td>
+					<td>{{ li.Evento }}</td>
+					<td>{{ li.SchemaTB }}</td>
+					<td>{{ li.Objeto }}</td>
+					<td>{{ li.TSQL }}</td>
+					<td>{{ li.XMLARQ }}</td>
+					<td><button class="btn btn-danger" ng-click="remover(li.MetodoEnvioID)">Excluir</button></td>
+					<td><button class="btn btn-warning" ng-click="editar(li.MetodoEnvioID)">Editar</button></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+    
+    <footer class="bg-dark text-white"> 
+     <div class="countainer">
+        <div class="row">
+            <div class="col-3">
+            </div>
+        </div>
+     </div>    
+    </footer>
+</body>
+
+
+</html>

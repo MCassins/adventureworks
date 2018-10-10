@@ -1,0 +1,76 @@
+<!DOCTYPE>
+<html ng-app="myApp">
+<head>
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+	<title>Locacao</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+	<script src="Locacao.js"></script>
+</head>
+<body>
+<nav class=" p-4 navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">Bem vindo ao módulo de Iventário</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+	<li class="nav-item active">
+        <a class="nav-link p-3 mb-2 bg-danger text-white" href="index.html"> Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link p-3 mb-2 bg-danger text-white" href="SubCategoriaProduto.html"> Sub Categoria Produto <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link p-3 mb-2 bg-danger text-white" href="Produto.html">Produto</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link p-3 mb-2 bg-danger text-white" href="Locacao.html">Locação</a>
+      </li>
+        <li class="nav-item">
+        <a class="nav-link p-3 mb-2 bg-danger text-white" href="ProdutoIventario.html">Produto Iventario</a>
+        </li>
+    </ul>
+  </div>
+</nav>
+	<div class="container" ng-controller="AppCtrl">
+		<h1>Locação</h1>
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Locação Id</th>
+					<th>Nome</th>
+					<th>Taxa Custo</th>	
+					<th>Avaliabilidade</th>
+					<th>Data de Modificação</th>						
+					<th>&nbsp;</th>				
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td><input class="form-control" ng-model="lista.locacaoId"></td>
+					<td><input class="form-control" ng-model="lista.nome"></td>
+					<td><input class="form-control" ng-model="lista.taxaCusto"></td>
+					<td><input class="form-control" ng-model="lista.avaliabilidade"></td>
+					<td><input class="form-control" ng-model="lista.DataModificacao"></td>
+					<td><button class="btn btn-primary" ng-click="addLivro()">Add Locacao</button></td>
+					<td><button class="btn btn-info" ng-click="atualizar()">Atualizar</button></td>
+				</tr>
+				<tr ng-repeat="li in livroslista">
+					<td>{{ li.locacaoId }}</td>			
+					<td>{{ li.nome }}</td>
+					<td>{{ li.taxaCusto }}</td>
+					<td>{{ li.avaliabilidade }}</td>
+					<td>{{ li.DataModificacao }}</td>
+					<td><button class="btn btn-danger" ng-click="remover(li.locacaoId)">Excluir</button></td>
+					<td><button class="btn btn-warning" ng-click="editar(li.locacaoId)">Editar</button></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+</html>
