@@ -29,7 +29,7 @@ public class CartaoCreditoTest {
 			CartaoCreditoRepository.save(new CartaoCredito("VISA", "aaaa", 12 , 2017 , data));
 			CartaoCreditoRepository.save(new CartaoCredito("MASTERCARD", "bbbb", 9 , 2015 , data));
 			CartaoCreditoRepository.save(new CartaoCredito("HIPERCARD", "cccc", 10 , 2014 , data));
-			
+			CartaoCreditoRepository.save(new CartaoCredito("NUBANk", "cccc", 10 , 2020 , data));
 			
 			System.out.println("\n*************FindAll Categoria*************");
 				List<CartaoCredito> CartaoCredito = new ArrayList<CartaoCredito>();

@@ -18,8 +18,6 @@ import javax.persistence.TemporalType;
 
 public class HistoricoTerritorioVendas {
 	
-	private static final long serialVersionUID = 1L;
-
 	@Embeddable
 	public static class IDComposto implements Serializable {
 

@@ -1,11 +1,11 @@
 package br.edu.up.jpa.repository;
 
 import org.springframework.data.repository.CrudRepository;
-
+import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 import br.edu.up.jpa.dominio.*;
 
-
+@RepositoryRestResource(collectionResourceRel = "tipocambio", path = "tipocambio", excerptProjection = TipoCambio.class)
 public interface TipoCambioRepository extends CrudRepository<TipoCambio , Integer> {
 	
 }
